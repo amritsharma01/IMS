@@ -4,8 +4,8 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import BuildingForm,RoomForm
-from IMSapp.models import Building,Room
+from .forms import BuildingForm,RoomForm,ExamForm
+from IMSapp.models import Building,Room,Exam
 
 # Create your views here.
 def index(request):
@@ -106,3 +106,19 @@ def rooms(request):
         "buildings":buildinglist
     })
         
+@login_required(login_url="IMSapp:login")
+def exams(request):
+    examlist=Exam.objects.all()
+    if request.method=="POST":
+        form=ExamForm(request.POST)
+        if form.is_valid():
+            print("hi")
+            form.save()
+        else:
+            print(form.errors.as_data())
+            
+        
+    return render(request,"exams.html",{
+        
+        "exams":examlist,
+    })
