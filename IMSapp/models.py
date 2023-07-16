@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 class Exam(models.Model):
     name=models.CharField(max_length=50)
-    start_time = models.TimeField()
     shift_choices=[
         ("morning","Morning"),
         ("day","Day")
@@ -22,6 +21,8 @@ class Exam(models.Model):
     
     def __str__(self):
         return f"{self.name} ({self.types},{self.semester},{self.shift})"
+    
+    
     
     
 class Building(models.Model):
@@ -58,17 +59,26 @@ class Invigilator(models.Model):
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
     
+    def is_invigilator_available(self, date, shift):
+        return ExamSession.objects.filter(invigilators=self, shift=shift, date=date).exists()
+    
 class ExamSession(models.Model):
     shift_choices=[
         ("morning","Morning"),
         ("day","Day")
     ]
     
-    start_time=models.TimeField()
+    
+    shift= models.CharField(max_length=10,choices=shift_choices,default="Morning")
     date=models.DateField()
     room=models.ForeignKey(Room,  on_delete=models.CASCADE, default=1)
-    invigilator=models.ManyToManyField(Invigilator)
-    exam=models.ForeignKey(Exam,on_delete=models.CASCADE, unique=True)
+    invigilators=models.ForeignKey(Invigilator,on_delete=models.CASCADE,default=1)
+    exam=models.ForeignKey(Exam,on_delete=models.CASCADE)
+
     def __str__(self):
         return f"Exam Session: {self.date}"
+    
+    class Meta:
+        unique_together=["shift","date","invigilators"]
+    
     

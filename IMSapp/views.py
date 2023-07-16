@@ -4,8 +4,8 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import BuildingForm,RoomForm,ExamForm
-from IMSapp.models import Building,Room,Exam
+from .forms import BuildingForm,RoomForm,ExamForm,InvigilatorForm,ExamSessionForm
+from IMSapp.models import Building,Room,Exam,Invigilator,ExamSession
 
 # Create your views here.
 def index(request):
@@ -121,4 +121,41 @@ def exams(request):
     return render(request,"exams.html",{
         
         "exams":examlist,
+    })
+
+@login_required(login_url="IMSapp:login")  
+def invigilators(request):
+    invigilators=Invigilator.objects.all()
+    if request.method=="POST":
+        form=InvigilatorForm(request.POST)
+        if form.is_valid():
+            print("hi")
+            form.save()
+        else:
+            print(form.errors.as_data())
+            
+        
+    return render(request,"invigilators.html",{
+        
+        "invigilators":invigilators,
+    })
+    
+@login_required(login_url="IMSapp:login")  
+def examsessions(request):
+    examsessions=ExamSession.objects.all()
+    roomlist=Room.objects.all()
+    invigilatorlist=Invigilator.objects.all()
+    examlist=Exam.objects.all()
+    if request.method=="POST":
+        form=ExamSessionForm(request.POST)
+        if form.is_valid():
+            print("hi")
+            form.save()
+        else:
+            print(form.errors.as_data())
+    return render(request,"examsessions.html",{
+        "rooms":roomlist,
+        "invigilators":invigilatorlist,
+        "exams":examlist,
+        "examsessions":examsessions
     })

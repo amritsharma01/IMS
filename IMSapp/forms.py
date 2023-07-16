@@ -1,5 +1,5 @@
 from django import forms
-from .models import Building,Room,Exam
+from .models import Building,Room,Exam,Invigilator,ExamSession
 
 class BuildingForm(forms.ModelForm):
     class Meta:
@@ -14,5 +14,15 @@ class RoomForm(forms.ModelForm):
 class ExamForm(forms.ModelForm):
     class Meta:
         model=Exam
-        fields=("name","semester","types","shift","start_time")
+        fields="__all__"
+        
+class InvigilatorForm(forms.ModelForm):
+    class Meta:
+        model=Invigilator
+        fields="__all__"
+        
+class ExamSessionForm(forms.ModelForm):
+    class Meta:
+        model=ExamSession
+        fields="__all__"
         

@@ -30,15 +30,15 @@
             <a class="nav-link" href="{% url "IMSapp:exams"%}">Add Exam</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Add Invigilator</a>
+            <a class="nav-link" href="{% url "IMSapp:invigilators"%}">Add Invigilator</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Add Exam Session</a>
+            <a class="nav-link" href="{% url "IMSapp:examsessions"%}">Add Exam Session</a>
           </li>
           
             
         </ul>
-        <h6 class="m-2">Hello {{variable.username}}<h6>
+        <h6 class="m-3">Hello {{variable.username.capitalize}}<h6>
         <form>
         <button class="btn btn-outline-success " type="submit"><a href="{%url "IMSapp:logout"%}" class="text-decoration-none">Logout</a></button>
         </form>

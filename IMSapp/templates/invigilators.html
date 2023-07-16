@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="vh" style="background-color: #eee;">
+        <div class="container h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black" style="border-radius: 25px;">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+      
+                      <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Add Invigilator</p>
+      
+                      <form action="{%url "IMSapp:invigilators"%}" class="mx-1 mx-md-4" method="POST">
+                        {% csrf_token %}
+                          <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              <input type="text" id="form3Example1c" class="form-control" name="firstname" required="True" />
+                              <label class="form-label" for="form3Example1c">First Name</label>
+                            </div>
+                          </div>
+                           <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              <input type="text" id="form3Example1c" class="form-control" name="lastname" required="True" />
+                              <label class="form-label" for="form3Example1c">Last Name</label>
+                            </div>
+                          </div>
+                           <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              <input type="text" id="form3Example1c" class="form-control" name="age" required="True" />
+                              <label class="form-label" for="form3Example1c">Age</label>
+                            </div>
+                          </div>
+                               <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              <input type="email" id="form3Example1c" class="form-control" name="email" required="True" />
+                              <label class="form-label" for="form3Example1c">Email</label>
+                            </div>
+                          </div>
+                               <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              <input type="phone" id="form3Example1c" class="form-control" name="phone" required="True" />
+                              <label class="form-label" for="form3Example1c">Phone Number</label>
+                            </div>
+                          </div>
+                               <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              <input type="text" id="form3Example1c" class="form-control" name="address" required="True" />
+                              <label class="form-label" for="form3Example1c">Address</label>
+                            </div>
+                          </div>
+                         <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              <select name="gender" class="select form-select"
+                                id="id_semester_type">
+                                <option value="male" selected>Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                          </select>
+                              <label class="form-label" for="form3Example1c">Gender</label>
+                            </div>
+                          </div>
+      
+      
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                          <button type="submit" class="btn btn-primary btn-lg">Add</button>
+                        </div>
+                      </form>
+                    </div>
+    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+       <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">List of Invigilators</p>
+
+
+<table class="table p-50">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">S.N</th>
+      <th scope="col">Name</th>
+       <th scope="col">Gender</th>
+      <th scope="col">Age</th>
+      <th scope="col">Email</th>
+       <th scope="col">Phone No</th>
+      <th scope="col">Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for invigilator in invigilators%}
+    <tr>
+        <th scope="row">{{forloop.counter}}</th>
+      <td>{{invigilator.firstname}} {{invigilator.lastname}}</td>
+      <td>{{invigilator.gender}}</td>
+      <td>{{invigilator.age}}</td>
+      <td>{{invigilator.email}}</td>
+      <td>{{invigilator.phone}}</td>
+      <td>{{invigilator.address}}</td>
+      {%endfor%}
+    </tr>
+  </tbody>
+</table>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+{% endblock%}
