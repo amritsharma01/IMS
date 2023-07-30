@@ -182,3 +182,13 @@ def uploadcsv(request):
 
         return render(request, 'addcsv.html', {'form': form})
     
+
+def notices(request):
+    notice=ExamSession.objects.all()
+    return render(request, "home.html",{
+        "notices":notice
+    })
+   
+   
+        
+    

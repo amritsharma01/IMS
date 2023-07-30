@@ -21,7 +21,7 @@ class Exam(models.Model):
     shift= models.CharField(max_length=10,choices=shift_choices,default="Morning")
     
     def __str__(self):
-        return f"{self.name} ({self.types},{self.semester},{self.shift})"
+        return f"{self.name}"
     
     
     
