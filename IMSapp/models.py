@@ -53,7 +53,7 @@ class Invigilator(models.Model):
     lastname=models.CharField(max_length=50)
     age=models.IntegerField(null=True)
     email=models.CharField(max_length=50,unique=True, null=True)
-    phone=models.CharField( max_length=50, unique=True,null=True)
+    post=models.CharField( max_length=50, unique=True,null=True)
     address=models.CharField( max_length=70,null=True)
     gender=models.CharField( max_length=50, choices=gender_choice,default="Male")
     
