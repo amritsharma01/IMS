@@ -10,6 +10,7 @@ urlpatterns = [
     path("rooms/",views.rooms,name="rooms"),
     path("exams/",views.exams,name="exams"),
     path("invigilators/",views.invigilators,name="invigilators"),
-    path("examsessions/",views.examsessions,name="examsessions")
+    path("examsessions/",views.examsessions,name="examsessions"),
+    path("uploadcsv/",views.uploadcsv,name="uploadcsv")
     
 ]

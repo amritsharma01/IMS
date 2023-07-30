@@ -5,7 +5,8 @@ class Exam(models.Model):
     name=models.CharField(max_length=50)
     shift_choices=[
         ("morning","Morning"),
-        ("day","Day")
+        ("day","Day"),
+        ("evening","Evening")
     ]
     type_choices=[
         ("regular","Regular"),
@@ -50,9 +51,9 @@ class Invigilator(models.Model):
     ]
     firstname=models.CharField(max_length=50)
     lastname=models.CharField(max_length=50)
-    age=models.IntegerField()
-    email=models.CharField(max_length=50,unique=True)
-    phone=models.CharField( max_length=50, unique=True)
+    age=models.IntegerField(null=True)
+    email=models.CharField(max_length=50,unique=True, null=True)
+    phone=models.CharField( max_length=50, unique=True,null=True)
     address=models.CharField( max_length=70,null=True)
     gender=models.CharField( max_length=50, choices=gender_choice,default="Male")
     
@@ -65,7 +66,8 @@ class Invigilator(models.Model):
 class ExamSession(models.Model):
     shift_choices=[
         ("morning","Morning"),
-        ("day","Day")
+        ("day","Day"),
+        ("evening","Evening")
     ]
     
     

@@ -25,4 +25,6 @@ class ExamSessionForm(forms.ModelForm):
     class Meta:
         model=ExamSession
         fields="__all__"
-        
+    
+class CsvUploadForm(forms.Form):
+    csv_file = forms.FileField()

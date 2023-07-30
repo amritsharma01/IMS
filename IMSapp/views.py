@@ -4,8 +4,10 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import BuildingForm,RoomForm,ExamForm,InvigilatorForm,ExamSessionForm
+from .forms import BuildingForm,RoomForm,ExamForm,InvigilatorForm,ExamSessionForm,CsvUploadForm
 from IMSapp.models import Building,Room,Exam,Invigilator,ExamSession
+from django.contrib import messages
+import csv
 
 # Create your views here.
 def index(request):
@@ -71,6 +73,7 @@ def register(request):
 
 @login_required(login_url="IMSapp:login")
 def buildings(request):
+    messages.success(request,"welcome to add building")
     buildinglist=Building.objects.all()
     if request.method=="POST":
         print("hai")
@@ -159,3 +162,23 @@ def examsessions(request):
         "exams":examlist,
         "examsessions":examsessions
     })
+    
+@login_required(login_url="IMSapp:login") 
+def uploadcsv(request):
+        if request.method == 'POST':
+            form = CsvUploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                csv_file = request.FILES['csv_file']
+                decoded_file = csv_file.read().decode('utf-8')
+                csv_data = csv.reader(decoded_file.splitlines(), delimiter=',')
+                next(csv_data) 
+                for row in csv_data:
+                    firstname, lastname = row
+                    invigilator = Invigilator.objects.create(firstname=firstname, lastname=lastname)
+                return HttpResponseRedirect(reverse("IMSapp:invigilators"))
+
+        else:
+            form = CsvUploadForm()
+
+        return render(request, 'addcsv.html', {'form': form})
+    
