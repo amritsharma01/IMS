@@ -13,8 +13,10 @@ import csv
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("IMSapp:login"))
+    notice=ExamSession.objects.all()
     return render(request,"home.html",{
-        "variable": request.user
+        "variable": request.user,
+        "notices":notice
     }
         
     )
@@ -73,16 +75,16 @@ def register(request):
 
 @login_required(login_url="IMSapp:login")
 def buildings(request):
-    messages.success(request,"welcome to add building")
     buildinglist=Building.objects.all()
     if request.method=="POST":
-        print("hai")
+        
         form=BuildingForm(request.POST)
         if form.is_valid():
-            print("hi")
             form.save()
+            messages.success(request,"Building added succesfully!")
+           
         else:
-            print(form.errors.as_data())
+            messages.error(request,"Invalid input or building already exists")
             
         
     return render(request,"building.html",{
@@ -173,8 +175,8 @@ def uploadcsv(request):
                 csv_data = csv.reader(decoded_file.splitlines(), delimiter=',')
                 next(csv_data) 
                 for row in csv_data:
-                    firstname, lastname = row
-                    invigilator = Invigilator.objects.create(firstname=firstname, lastname=lastname)
+                    firstname, lastname ,post= row
+                    invigilator = Invigilator.objects.create(firstname=firstname, lastname=lastname,post=post)
                 return HttpResponseRedirect(reverse("IMSapp:invigilators"))
 
         else:
@@ -183,12 +185,6 @@ def uploadcsv(request):
         return render(request, 'addcsv.html', {'form': form})
     
 
-def notices(request):
-    notice=ExamSession.objects.all()
-    return render(request, "home.html",{
-        "notices":notice
-    })
-   
    
         
     

@@ -12,6 +12,6 @@ urlpatterns = [
     path("invigilators/",views.invigilators,name="invigilators"),
     path("examsessions/",views.examsessions,name="examsessions"),
     path("uploadcsv/",views.uploadcsv,name="uploadcsv"),
-    path("notices/",views.notices,name="notices")
+    # path("notices/",views.notices,name="notices")
     
 ]

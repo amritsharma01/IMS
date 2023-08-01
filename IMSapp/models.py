@@ -51,12 +51,14 @@ class Invigilator(models.Model):
     ]
     firstname=models.CharField(max_length=50)
     lastname=models.CharField(max_length=50)
-    age=models.IntegerField(null=True)
-    email=models.CharField(max_length=50,unique=True, null=True)
-    post=models.CharField( max_length=50, unique=True,null=True)
-    address=models.CharField( max_length=70,null=True)
+    age=models.IntegerField(blank=True,null=True)
+    email=models.CharField(max_length=50,unique=True, blank=True,null=True)
+    post=models.CharField( max_length=50)
+    address=models.CharField( max_length=70,blank=True, null=True)
     gender=models.CharField( max_length=50, choices=gender_choice,default="Male")
     
+    class Meta:
+        unique_together=["post", "firstname","lastname"]
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
     
